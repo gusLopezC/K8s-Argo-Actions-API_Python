@@ -42,7 +42,7 @@ jobs:
         shell: bash
         run: |
           echo ${{needs.ci.outputs.commit_id}}
-          pip install yq 
+          pip install yq
           yq -Yi '.image.tag = "${{needs.ci.outputs.commit_id}}"' charts/python-app/values.yaml
 
       - name: Commit changes
@@ -53,10 +53,9 @@ jobs:
       - name: Install argocd
         shell: bash
         run: |
-          curl -sSL -o argocd.gz https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64.gz
-          gunzip argocd.gz
+          curl -ksSL -o argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
           chmod +x argocd
-          mv argocd /usr/local/bin/
+          sudo mv ./argocd /usr/local/bin/argocd
 
       - name: Argocd app sync
         shell: bash

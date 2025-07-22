@@ -76,6 +76,14 @@ def users():
         'data_source': 'simulated'
     })
 
+@app.route('/api/v1/random')
+def random_number():
+    return jsonify({
+        'random_number': random.randint(1, 100),
+        'timestamp': datetime.datetime.now().isoformat(),
+        'message': 'Aquí tienes un número aleatorio entre 1 y 100.'
+    })
+
 if __name__ == '__main__':
 
     app.run(host="0.0.0.0")
