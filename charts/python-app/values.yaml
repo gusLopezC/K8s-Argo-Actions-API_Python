@@ -2,7 +2,7 @@ replicaCount: 1
 image:
   repository: guslopezc/python-appsimpleapi
   pullPolicy: IfNotPresent
-  tag: ed7159
+  tag: ded2a6
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
