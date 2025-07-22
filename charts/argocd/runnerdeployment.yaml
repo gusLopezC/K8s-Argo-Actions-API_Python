@@ -7,4 +7,4 @@ spec:
   replicas: 1
   template:
     spec:
-      repository: gusLopezC-DevOps/python-appsimpleapi
+      repository: gusLopezC/K8s-Argo-Actions-API_Python
