@@ -1,0 +1,40 @@
+apiVersion: flagger.app/v1beta1
+kind: Canary
+metadata:
+  name: python-app
+  namespace: default
+spec:
+  # Referencia al Deployment que gestiona tu Helm Chart
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: python-app
+  
+  # Flagger creará los Servicios (ClusterIP) automáticamente
+  service:
+    port: 5000         # El puerto que expone tu Service actual
+    targetPort: 5000   # El puerto de tu contenedor (Flask)
+    portDiscovery: true
+  
+  analysis:
+    # Frecuencia de análisis (Rápido para demo)
+    interval: 30s
+    # Si falla 5 veces, hace Rollback
+    threshold: 5
+    # Mueve 10% del tráfico en cada paso
+    stepWeight: 10
+    # Al llegar al 50%, promueve al 100%
+    maxWeight: 50
+    
+    # Métricas a consultar en Prometheus
+    metrics:
+      - name: request-success-rate
+        # Éxito si el 99% de las peticiones son 200 OK
+        thresholdRange:
+          min: 99
+        interval: 1m
+      - name: request-duration
+        # Éxito si responden en menos de 500ms
+        thresholdRange:
+          max: 500
+        interval: 1m
